@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+
+	<div>
+		<form method="POST" enctype="multipart/form-data" action="/bulk/customers/upload">
+			<table>
+				<tr><td>File to upload:</td><td><input type="file" name="file" accept=".json" /></td></tr>
+				<tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+			</table>
+		</form>
+	</div>
+	
+	<div>
+      <ul id="dataList">
+
+      </ul>
+    </div>
+
+	<!--  <script>
+      var dataTable = document.getElementById("dataList");
+      var source = new EventSource("/stream/customers");
+      source.addEventListener("message", function(event) {
+    	  console.log(event);
+    	  var newElement = document.createElement("li");
+    	  newElement.innerHTML = event.data;
+    	  dataList.appendChild(newElement)
+      }, false);
+    </script> -->
+
+</body>
+</html>
