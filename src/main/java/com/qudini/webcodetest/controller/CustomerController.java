@@ -2,17 +2,15 @@ package com.qudini.webcodetest.controller;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.codec.multipart.Part;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,18 +41,24 @@ public class CustomerController {
 						.sort(Comparator.comparing(Customer::getDuetime)).collectList();	
 	}
 	
-	@PostMapping("/bulk/customers/upload")
-	public Mono<String> uploadCustomersInBulk(@RequestParam("file") MultipartFile file) {
-		System.out.println(file.toString());
+	@PostMapping(value = "/bulk/customers/upload", 
+			consumes = MediaType.MULTIPART_FORM_DATA_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public Mono<String> uploadCustomersInBulk(@RequestPart("file") Mono<FilePart> file) {
+		file.map(CustomerController::partAsString);
 		/**return customerRepository.saveAllCustomers(customers)
 						.sort(Comparator.comparing(Customer::getDuetime)).collectList();**/
 		return Mono.empty();	
 	}
 	
+	private static String partAsString(FilePart part) {
+		return part.toString();
+	}
+	
 	
 	
 	// Customers are sent to the client as Server Sent Events
-	@GetMapping(value = "/stream/customers", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	@PostMapping(value = "/stream/customers", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public Flux<Customer> streamAllCustomers(){
 		return customerRepository.getAllCustomers();
 	}
