@@ -11,7 +11,7 @@ import com.qudini.webcodetest.model.Customer;
 import reactor.core.publisher.Flux;
 
 @Component
-public class CustomerRepositoryInMemoryImpl implements CustomerRepository<Customer, Long> {
+public class CustomerRepositoryInMemoryImpl implements CustomerRepository {
 	
 	private final Map<Long, Customer> customerMap = new ConcurrentHashMap<>();
 

@@ -11,7 +11,7 @@ import reactor.core.publisher.Flux;
 
 
 @Repository
-public interface CustomerRepository<T, ID> {
+public interface CustomerRepository {
 
 	Flux<Customer> getAllCustomers();
 

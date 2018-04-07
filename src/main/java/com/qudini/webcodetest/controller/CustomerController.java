@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.qudini.webcodetest.model.Customer;
-import com.qudini.webcodetest.repository.CustomerRepositoryInMemoryImpl;
-
+import com.qudini.webcodetest.repository.CustomerRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -25,7 +22,7 @@ import reactor.core.publisher.Mono;
 public class CustomerController {
 	
 	@Autowired
-	private CustomerRepositoryInMemoryImpl customerRepository;
+	private CustomerRepository customerRepository;
 
 	
 	
